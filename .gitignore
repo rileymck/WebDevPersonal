@@ -34,3 +34,10 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+
+# macOS system directories
+/Library/
+.Trash/
+.DS_Store
+.vscode/
