@@ -6,33 +6,15 @@ class Student < ApplicationRecord
     validate :custom_email_validation
     validate :acceptable_image
 
+    VALID_MAJORS = ["Computer Engineering BS", "Computer Information Systems BS", "Computer Science BS", "Cybersecurity Major", "Data Science and Machine Learning Major"]
+
+    validates :major, inclusion: {in: VALID_MAJORS, message: "%{value} is not a valid major"}
 
     private
 
     def custom_email_validation
         # Add any additional custom email validations here
     end
-
-
-
-
-    #has_one_attached :profile_picture
-
-    # Validation for profile picture
-    #validate :acceptable_image
-
-    #def acceptable_image
-        #return unless profile_picture.attached? # Only validate if a picture is attached
-      
-        #unless profile_picture.byte_size <= 1.megabyte
-          #errors.add(:profile_picture, "is too big")
-        #end
-      
-        #acceptable_types = ["image/jpeg", "image/png"]
-        #unless acceptable_types.include?(profile_picture.content_type)
-          #errors.add(:profile_picture, "must be a JPEG or PNG")
-        #end
-      #end
     
       
 

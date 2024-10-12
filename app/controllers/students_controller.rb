@@ -3,7 +3,40 @@ class StudentsController < ApplicationController
 
   # GET /students or /students.json
   def index
-    @students = Student.all
+    #Rails.logger.info "Params: #{params.inspect}"
+
+    @search_params = params[:search] || {}
+    #@students = Student.all
+    @students = [] 
+
+    if params[:show_all]
+      @students = Student.all
+
+    elsif @search_params[:major].blank? || @search_params[:major] == "all"
+      flash.now[:alert] = "Please select a major"
+
+    else@Students = Student.where(major: @search_params[:major])
+      @students = Student.where(major: @search_params[:major])
+
+      if @search_params[:grad_date_filter].present? && @search_params[:graduation_date].present?
+        begin
+          selected_date = Date.parse(@search_params[:graduation_date])
+
+          if @search_params[:grad_date_filter] == 'before'
+            @students = @students.where("graduation_date < ?", selected_date)
+          elsif @search_params[:grad_date_filter] == 'after'
+            @students.where("graduation_date > ?", selected_date)
+          end
+
+        rescue ArgumentError
+          flash.now[:alert] = "Invalid date format"
+          @students = []
+        end
+      end
+  end
+
+    Rails.logger.info "Search Params: #{@search_params.inspect}"
+
   end
 
   # GET /students/1 or /students/1.json
@@ -68,3 +101,4 @@ class StudentsController < ApplicationController
       params.require(:student).permit(:first_name, :last_name, :school_email, :major, :minor, :graduation_date, :profile_picture)
     end
 end
+
