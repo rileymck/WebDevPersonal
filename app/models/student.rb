@@ -5,6 +5,8 @@ class Student < ApplicationRecord
     validates :school_email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP, message: "must be a valid email address" }
     validate :custom_email_validation
     validate :acceptable_image
+    validates :minor, presence: true
+
 
     VALID_MAJORS = ["Computer Engineering BS", "Computer Information Systems BS", "Computer Science BS", "Cybersecurity Major", "Data Science and Machine Learning Major"]
 
@@ -15,6 +17,9 @@ class Student < ApplicationRecord
     def custom_email_validation
         # Add any additional custom email validations here
     end
+
+    has_one_attached :profile_picture, dependent: :purge_later
+
     
       
 

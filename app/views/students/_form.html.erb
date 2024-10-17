@@ -13,37 +13,37 @@
 
   <div class="field">
     <%= form.label :first_name, style: "display: block" %>
-    <%= form.text_field :first_name %>
+    <%= form.text_field :first_name, 'aria-label': 'First Name' %>
   </div>
 
   <div class="field">
     <%= form.label :last_name, style: "display: block" %>
-    <%= form.text_field :last_name %>
+    <%= form.text_field :last_name, 'aria-label': 'Last Name' %>
   </div>
 
   <div class="field">
     <%= form.label :school_email, style: "display: block" %>
-    <%= form.text_field :school_email %>
+    <%= form.text_field :school_email, 'aria-label': 'School Email' %>
   </div>
 
   <div class="field">
     <%= form.label :major, style: "display: block" %>
-    <%= form.select :major, options_for_select(Student::VALID_MAJORS), {prompt: "Select a Major"}, class: "form-control" %>
+    <%= form.select :major, options_for_select(Student::VALID_MAJORS), {prompt: "Select a Major"}, class: "form-control", 'aria-label': 'Major' %>
   </div>
 
   <div class="field">
     <%= form.label :minor, style: "display: block" %>
-    <%= form.text_field :minor %>
+    <%= form.text_field :minor, 'aria-label': 'Minor' %>
   </div>
 
   <div class="field">
     <%= form.label :graduation_date, style: "display: block" %>
-    <%= form.date_field :graduation_date %>
+    <%= form.date_field :graduation_date, 'aria-label': 'Graduation Date' %>
   </div>
 
   <div class="field">
     <%= form.label :profile_picture %>
-    <%= form.file_field :profile_picture %>
+    <%= form.file_field :profile_picture, 'aria-label': 'Profile Picture' %>
   </div>
   
   <div class="actions">

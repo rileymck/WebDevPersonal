@@ -67,3 +67,13 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+group :development, :test do
+  gem 'faker'
+end
+
+group :development, :test do
+  #gem 'rspec-rails', '~> 6.0'  # or the latest stable version
+  gem 'factory_bot_rails'      # For generating test data
+  gem 'faker'                  # For generating fake data
+end

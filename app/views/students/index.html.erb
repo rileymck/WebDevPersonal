@@ -1,3 +1,6 @@
+
+
+
 <p style="color: green"><%= notice %></p>
 
 
@@ -11,11 +14,6 @@
 
 
 <%= link_to "New Student", new_student_path %> 
-
-
-
-
-
 
 <table class="table">
   <thead>
@@ -35,11 +33,26 @@
         <td><%= student.major %></td>
         <td><%= student.graduation_date %></td>
         <td>
-          <%= link_to 'Show', student_path(student), class: "btn btn-info" %>
-          <%= link_to 'Edit', edit_student_path(student), class: "btn btn-warning" %>
-          <%= link_to 'Delete', student_path(student), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+          <%= link_to 'Show', student_path(student), class: "btn btn-secondary hover-grow", tabindex: 1 %>
+          <%= link_to 'Edit', edit_student_path(student), class: "btn btn-success hover-grow" %>
+          <%= link_to 'Delete', student_path(student), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger hover-grow" %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+
+
+
+<style>
+  /* Add this CSS to style the hover effect */
+
+  .hover-grow {
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .hover-grow:hover {
+    transform: scale(1.1);  /* Makes the button grow 10% larger on hover */
+  }
+</style>

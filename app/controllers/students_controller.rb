@@ -3,40 +3,46 @@ class StudentsController < ApplicationController
 
   # GET /students or /students.json
   def index
-    #Rails.logger.info "Params: #{params.inspect}"
-
     @search_params = params[:search] || {}
-    #@students = Student.all
-    @students = [] 
+    @students = Student.all
 
+    #"Show All" button shows all students
     if params[:show_all]
       @students = Student.all
 
-    elsif @search_params[:major].blank? || @search_params[:major] == "all"
-      flash.now[:alert] = "Please select a major"
-
-    else@Students = Student.where(major: @search_params[:major])
-      @students = Student.where(major: @search_params[:major])
-
-      if @search_params[:grad_date_filter].present? && @search_params[:graduation_date].present?
-        begin
-          selected_date = Date.parse(@search_params[:graduation_date])
-
-          if @search_params[:grad_date_filter] == 'before'
-            @students = @students.where("graduation_date < ?", selected_date)
-          elsif @search_params[:grad_date_filter] == 'after'
-            @students.where("graduation_date > ?", selected_date)
-          end
-
-        rescue ArgumentError
-          flash.now[:alert] = "Invalid date format"
-          @students = []
-        end
+    #Searches only if major or graduation date is filled out correctly
+    elsif @search_params[:major].present? || @search_params[:graduation_date].present?
+      #Filter by major is provided
+      if @search_params[:major].present? && @search_params[:major] != "all"
+        @students = @students.where(major: @search_params[:major])
       end
+      #Filter by graduation date if the date and before/after is provided
+      if @search_params[:grad_date_filter].present? && @search_params[:graduation_date].present?
+      begin
+        selected_date = Date.parse(@search_params[:graduation_date])
+        Rails.logger.info "Parsed Date: #{selected_date}"
+
+        if @search_params[:grad_date_filter] == 'before' && @search_params[:graduation_date].present?
+          @students = @students.where("graduation_date < ?", @search_params[:graduation_date])
+        elsif @search_params[:grad_date_filter] == 'after' && @search_params[:graduation_date].present?
+          @students = @students.where("graduation_date > ?", @search_params[:graduation_date])
+        end
+
+      rescue ArgumentError
+        #Return no results if date is invalid
+        flash.now[:alert] = "Invalid date format" 
+        @students = Student.none
+      end
+    end
+
+  else
+    #If no search feilds are filled, show an alert or show no students
+    flash.now[:alert] = "Please provide at least one search criteria"
+    @students = Student.none
   end
 
     Rails.logger.info "Search Params: #{@search_params.inspect}"
-
+    Rails.logger.info "Resulting Students: #{@search.inspect}"
   end
 
   # GET /students/1 or /students/1.json

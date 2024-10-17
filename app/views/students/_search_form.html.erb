@@ -8,14 +8,14 @@
     <div>
     <!--Graduation date filter(Before or After)-->
         <%= form.label :grad_date_filter, "Graduation Date Filter", class: "form-label" %>
-        <%= form.radio_button :grad_date_filter, 'before', checked: params.dig(:search, :grad_date_filter) == 'before' %> Before
-        <%= form.radio_button :grad_date_filter, 'after', checked: params.dig(:search, :grad_date_filter) == 'after' %> After
+        <%= form.radio_button :grad_date_filter, 'before', checked: params.dig(:search, :grad_date_filter) == 'before',  name: 'search[grad_date_filter]' %> Before
+        <%= form.radio_button :grad_date_filter, 'after', checked: params.dig(:search, :grad_date_filter) == 'after',  name: 'search[grad_date_filter]' %> After
     </div>
 
     <div>
     <!--Date Picker-->
         <%= form.label :graduation_date, "Graduation Date", class: "form-label" %>
-        <%= form.date_field :graduation_date, value: params.dig(:search, :graduation_date), class: "form-control" %>
+        <%= form.date_field :graduation_date, value: params.dig(:search, :graduation_date), name: 'search[graduation_date]', class: "form-control" %>
     </div>
    
     <div>
